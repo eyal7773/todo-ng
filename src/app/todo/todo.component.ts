@@ -5,7 +5,7 @@ import { NgForm, NgModel } from '@angular/forms';
 interface Task {
   name:string;
   isUpdated:boolean;
-
+  isVisible:boolean;
 }
 
 enum SortOptions {
@@ -34,7 +34,7 @@ export class TodoComponent implements OnInit {
 
   handleSubmit(addForm:NgForm) :void {
     
-    this.tasks.push({ name: addForm.value.task , isUpdated:false});
+    this.tasks.push({ name: addForm.value.task , isUpdated:false,isVisible:true});
 
     addForm.resetForm();
   }
@@ -98,8 +98,25 @@ export class TodoComponent implements OnInit {
       default:
         break;
     }
-
-
   }
+  handleSearch(searchText:string) {
+
+    // in case the user delete the search work
+    // we will show all the tasks.
+    if (searchText === '') {
+      this.tasks.forEach( (task) => {
+        task.isVisible = true;
+     });  
+    }
+
+    this.tasks.map((task) => {
+       task.isVisible =  (task.name.includes(searchText));
+       
+    });
+      
+    
+  }
+
+  
 
 }
