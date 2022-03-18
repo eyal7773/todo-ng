@@ -4,7 +4,38 @@
     <button type="submit">Add Task</button>
 </form>
 
+
+
+
 <h2>Tasks</h2>
-<ul>
+<!-- <ul>
     <li *ngFor="let t of tasks">{{t}} <button style="border:1px dotted gray" (click)="handleRemove(t)"> Remove</button></li>
-</ul>
+</ul> -->
+
+<table >
+    <thead>
+        <tr>
+            <td>Task</td>
+            <td>Operations</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let t of tasks" style="border:1px solid green;">
+            <td>
+                <span *ngIf="!t.isUpdated">{{t.name}}</span>
+                <span *ngIf="t.isUpdated">
+                    
+                        
+                        <input type="text" name="newName" #newName >
+                        <button type="submit" (click)="handleSubmitUpdate(newName.value, t.name)">Save</button>
+                    
+                </span>                    
+            </td>
+
+            <td>
+                <button style="border:1px dotted gray" (click)="handleRemove(t.name)"> Remove</button>
+                <button style="border:1px dotted purple" (click)="handleUpdate(t)">Update</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
