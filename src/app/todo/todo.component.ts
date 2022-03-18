@@ -21,6 +21,7 @@ enum SortOptions {
 })
 export class TodoComponent implements OnInit {
 
+  readonly TASKS_KEY = 'tasks';
   SortEnum = SortOptions;
   tasks:Task[] = [];
   sorted:SortOptions = SortOptions.NONE;
@@ -30,6 +31,10 @@ export class TodoComponent implements OnInit {
 
 
   ngOnInit(): void {
+    let savedTasks = localStorage.getItem(this.TASKS_KEY);
+    if (savedTasks != null ) {
+      this.tasks = JSON.parse(savedTasks);
+    }
   }
 
   handleSubmit(addForm:NgForm) :void {
@@ -117,6 +122,8 @@ export class TodoComponent implements OnInit {
     
   }
 
-  
+  handleSave() : void {
+    localStorage.setItem(this.TASKS_KEY,JSON.stringify(this.tasks))
+  }
 
 }
