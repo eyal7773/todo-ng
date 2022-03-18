@@ -7,6 +7,13 @@ interface Task {
   isUpdated:boolean;
 
 }
+
+enum SortOptions {
+  ASC = 'asc',
+  DESC = 'desc',
+  NONE = 'none'
+}
+
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
@@ -14,8 +21,13 @@ interface Task {
 })
 export class TodoComponent implements OnInit {
 
+  SortEnum = SortOptions;
   tasks:Task[] = [];
+  sorted:SortOptions = SortOptions.NONE;
+
+
   constructor() { }
+
 
   ngOnInit(): void {
   }
@@ -41,6 +53,53 @@ export class TodoComponent implements OnInit {
     let updatedTaskObject:Task = this.tasks.filter(t => t.name === oldName)[0];
     updatedTaskObject.name = newName;
     updatedTaskObject.isUpdated = false;
+
+  }
+
+  handleSort(direction:SortOptions) {
+    if (direction == this.sorted) {
+      this.sorted = SortOptions.NONE;
+      return;
+    } 
+
+    this.sorted = direction;
+
+    switch (direction) {
+      case SortOptions.ASC:
+      
+        this.tasks = this.tasks.sort((a,b) => {
+          let al = a.name.toLowerCase();
+          let bl = b.name.toLowerCase();
+          if (al < bl ) {
+            return -1;
+          } 
+          if (al > bl) {
+            return 1;
+          }
+          return 0;
+        });
+        
+        break;
+    
+        case SortOptions.DESC: 
+        this.tasks = this.tasks.sort((a,b) => {
+          let al = a.name.toLowerCase();
+          let bl = b.name.toLowerCase();
+          if (al < bl ) {
+            return 1;
+          } 
+          if (al > bl) {
+            return -1;
+          }
+          return 0;
+        });
+        break;
+    
+      default:
+        break;
+    }
+
+
   }
 
 }

@@ -12,10 +12,15 @@
     <li *ngFor="let t of tasks">{{t}} <button style="border:1px dotted gray" (click)="handleRemove(t)"> Remove</button></li>
 </ul> -->
 
+
+
 <table >
     <thead>
         <tr>
-            <td>Task</td>
+            <td>Task
+                <span [class.isSorted]="sorted == SortEnum.ASC" (click)="handleSort(SortEnum.ASC)">&#8593;</span>
+                <span [class.isSorted]="sorted == SortEnum.DESC" (click)="handleSort(SortEnum.DESC)">&#8595;</span>
+            </td>
             <td>Operations</td>
         </tr>
     </thead>
