@@ -1,0 +1,10 @@
+<form #addForm="ngForm" (submit)="handleSubmit(addForm)" >
+
+    <input type="text" ngModel name="task" >
+    <button type="submit">Add Task</button>
+</form>
+
+<h2>Tasks</h2>
+<ul>
+    <li *ngFor="let t of tasks">{{t}} <button style="border:1px dotted gray" (click)="handleRemove(t)"> Remove</button></li>
+</ul>
